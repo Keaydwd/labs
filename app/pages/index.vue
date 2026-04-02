@@ -1,76 +1,164 @@
+<script setup lang="ts">
+useHead({
+  title: 'Список продуктів'
+})
+
+const { data } = await useFetch('/api/products')
+
+const isAnnual = ref(true)
+
+const plans = [
+  {
+    name: 'Starter',
+    monthlyPrice: 83.25,
+    annualPrice: 999,
+    originalAnnual: 1188,
+    savings: 189,
+    members: '0',
+    memberExtra: '$35/month',
+    exports: '10,000',
+    exportExtra: '$0.02 each',
+    skipTraces: '500',
+    skipExtra: '$0.08 each',
+  },
+  {
+    name: 'Team',
+    monthlyPrice: 207.50,
+    annualPrice: 2490,
+    originalAnnual: 2988,
+    savings: 498,
+    members: '2',
+    memberExtra: '$25/month',
+    exports: '50,000',
+    exportExtra: '$0.01 each',
+    skipTraces: '1,000',
+    skipExtra: '$0.08 each',
+  },
+  {
+    name: 'Business',
+    monthlyPrice: 457.50,
+    annualPrice: 5490,
+    originalAnnual: 6588,
+    savings: 1098,
+    members: '6',
+    memberExtra: '$20/month',
+    exports: '100,000',
+    exportExtra: '$0.01 each',
+    skipTraces: '2,000',
+    skipExtra: '$0.08 each',
+  },
+]
+</script>
+
 <template>
-  <div>
-    <UPageHero
-      title="Nuxt Starter Template"
-      description="A production-ready starter template powered by Nuxt UI. Build beautiful, accessible, and performant applications in minutes, not hours."
-      :links="[{
-        label: 'Get started',
-        to: 'https://ui.nuxt.com/docs/getting-started/installation/nuxt',
-        target: '_blank',
-        trailingIcon: 'i-lucide-arrow-right',
-        size: 'xl'
-      }, {
-        label: 'Use this template',
-        to: 'https://github.com/nuxt-ui-templates/starter',
-        target: '_blank',
-        icon: 'i-simple-icons-github',
-        size: 'xl',
-        color: 'neutral',
-        variant: 'subtle'
-      }]"
-    />
+  <div class="bg-gray-50 min-h-screen p-10">
 
-    <UPageSection
-      id="features"
-      title="Everything you need to build modern Nuxt apps"
-      description="Start with a solid foundation. This template includes all the essentials for building production-ready applications with Nuxt UI's powerful component system."
-      :features="[{
-        icon: 'i-lucide-rocket',
-        title: 'Production-ready from day one',
-        description: 'Pre-configured with TypeScript, ESLint, Tailwind CSS, and all the best practices. Focus on building features, not setting up tooling.'
-      }, {
-        icon: 'i-lucide-palette',
-        title: 'Beautiful by default',
-        description: 'Leveraging Nuxt UI\'s design system with automatic dark mode, consistent spacing, and polished components that look great out of the box.'
-      }, {
-        icon: 'i-lucide-zap',
-        title: 'Lightning fast',
-        description: 'Optimized for performance with SSR/SSG support, automatic code splitting, and edge-ready deployment. Your users will love the speed.'
-      }, {
-        icon: 'i-lucide-blocks',
-        title: '100+ components included',
-        description: 'Access Nuxt UI\'s comprehensive component library. From forms to navigation, everything is accessible, responsive, and customizable.'
-      }, {
-        icon: 'i-lucide-code-2',
-        title: 'Developer experience first',
-        description: 'Auto-imports, hot module replacement, and TypeScript support. Write less boilerplate and ship more features.'
-      }, {
-        icon: 'i-lucide-shield-check',
-        title: 'Built for scale',
-        description: 'Enterprise-ready architecture with proper error handling, SEO optimization, and security best practices built-in.'
-      }]"
-    />
+    <div class="flex items-center justify-between mb-8 max-w-5xl mx-auto">
+      <h1 class="text-2xl font-bold text-gray-900">Start Your 3 Day Free Trial</h1>
+      <div class="flex items-center gap-3">
+        <span class="text-green-600 text-sm font-medium flex items-center gap-1">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"/>
+          </svg>
+          Save up to 20%
+        </span>
+        <div class="flex rounded-lg border border-gray-300 overflow-hidden text-sm">
+          <button
+            :class="isAnnual ? 'bg-white text-black' : 'bg-gray-100 text-gray-400'"
+            class="px-4 py-1.5 font-medium transition-colors"
+            @click="isAnnual = true"
+          >Annual</button>
+          <button
+            :class="!isAnnual ? 'bg-white text-black' : 'bg-gray-100 text-gray-400'"
+            class="px-4 py-1.5 font-medium transition-colors"
+            @click="isAnnual = false"
+          >Monthly</button>
+        </div>
+      </div>
+    </div>
 
-    <UPageSection>
-      <UPageCTA
-        title="Ready to build your next Nuxt app?"
-        description="Join thousands of developers building with Nuxt and Nuxt UI. Get this template and start shipping today."
-        variant="subtle"
-        :links="[{
-          label: 'Start building',
-          to: 'https://ui.nuxt.com/docs/getting-started/installation/nuxt',
-          target: '_blank',
-          trailingIcon: 'i-lucide-arrow-right',
-          color: 'neutral'
-        }, {
-          label: 'View on GitHub',
-          to: 'https://github.com/nuxt-ui-templates/starter',
-          target: '_blank',
-          icon: 'i-simple-icons-github',
-          color: 'neutral',
-          variant: 'outline'
-        }]"
-      />
-    </UPageSection>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+      <div
+        v-for="plan in plans"
+        :key="plan.name"
+        class="bg-white rounded-2xl shadow border border-gray-200 hover:border-gray-400 transition-colors overflow-hidden"
+      >
+        <div class="h-1.5 w-full bg-gradient-to-r from-green-500 to-cyan-400"></div>
+        <div class="p-6">
+          <h2 class="text-lg font-bold text-gray-900">{{ plan.name }} - {{ isAnnual ? 'Annual' : 'Monthly' }}</h2>
+          <div class="mt-3 bg-gray-100 text-gray-500 text-xs font-semibold px-2.5 py-1.5 rounded-md inline-block">
+            3-days free then:
+          </div>
+          <div class="mt-3 flex items-baseline">
+            <span class="text-4xl font-extrabold text-gray-900">
+              ${{ isAnnual ? plan.monthlyPrice.toFixed(2) : (plan.monthlyPrice * 1.2).toFixed(2) }}
+            </span>
+            <span class="ml-1 text-gray-400 font-medium">/month</span>
+          </div>
+          <p class="text-gray-400 text-xs mt-1">
+            billed yearly at
+            <span class="line-through">${{ plan.originalAnnual.toLocaleString() }}</span>
+            <span class="text-gray-700 font-semibold ml-1">${{ plan.annualPrice.toLocaleString() }}</span>
+          </p>
+          <div class="mt-2 bg-teal-100 text-teal-700 text-xs font-semibold px-2.5 py-1.5 rounded-md inline-block">
+            ${{ plan.savings }} in savings
+          </div>
+
+          <button class="mt-4 w-full bg-gradient-to-r from-yellow-400 to-orange-400 text-black font-bold py-3 rounded-lg text-sm transition-all duration-200 hover:brightness-70 active:brightness-75">
+            Try It Free
+          </button>
+
+          <div class="h-px bg-gray-100 my-5"></div>
+
+          <ul class="space-y-3 text-sm">
+            <li class="flex gap-2 items-start">
+              <span class="text-green-500 mt-0.5">✦</span>
+              <div>
+                <span class="font-medium text-gray-800">Primary user + {{ plan.members }} free team members</span>
+                <div class="text-gray-400 text-xs">(extra team members for {{ plan.memberExtra }})</div>
+              </div>
+            </li>
+            <li class="flex gap-2 items-start">
+              <span class="text-green-500 mt-0.5">✦</span>
+              <span class="font-medium text-gray-800">Save unlimited properties</span>
+            </li>
+            <li class="flex gap-2 items-start">
+              <span class="text-green-500 mt-0.5">✦</span>
+              <div>
+                <span class="font-medium text-gray-800"><strong>{{ plan.exports }}</strong> exports</span>
+                <div class="text-gray-400 text-xs">(additional exports at {{ plan.exportExtra }})</div>
+              </div>
+            </li>
+            <li class="flex gap-2 items-start">
+              <span class="text-green-500 mt-0.5">✦</span>
+              <div>
+                <span class="font-medium text-gray-800"><strong>{{ plan.skipTraces }}</strong> free skip traces</span>
+                <div class="text-gray-400 text-xs">(additional skip tracing at {{ plan.skipExtra }})</div>
+              </div>
+            </li>
+            <li class="flex gap-2 items-start">
+              <span class="text-green-500 mt-0.5">✦</span>
+              <span class="font-medium text-gray-800">Imports $0.01</span>
+            </li>
+            <li class="flex gap-2 items-start">
+              <span class="text-green-500 mt-0.5">✦</span>
+              <span class="font-medium text-gray-800">FREE daily product trainings and support</span>
+            </li>
+            <li class="flex gap-2 items-start">
+              <span class="text-green-500 mt-0.5">✦</span>
+              <span class="font-medium text-gray-800">Full suite of next-gen investing tools</span>
+            </li>
+            <li class="flex gap-2 items-start">
+              <span class="text-green-500 mt-0.5">✦</span>
+              <span class="font-medium text-gray-800">Industry first AI powered comp tool</span>
+            </li>
+            <li class="flex gap-2 items-start">
+              <span class="text-green-500 mt-0.5">✦</span>
+              <span class="font-medium text-gray-800">Includes dedicated support agent</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
