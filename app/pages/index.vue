@@ -104,10 +104,12 @@ const plans = [
             ${{ plan.savings }} in savings
           </div>
 
-          <button class="mt-4 w-full bg-gradient-to-r from-yellow-400 to-orange-400 text-black font-bold py-3 rounded-lg text-sm transition-all duration-200 hover:brightness-70 active:brightness-75">
+          <NuxtLink
+            :to="`/checkout?plan=${plan.name}&annual=${isAnnual}`"
+            class="mt-4 flex justify-center w-full bg-gradient-to-r from-yellow-400 to-orange-400 text-black font-bold py-3 rounded-lg text-sm transition-all duration-200 hover:brightness-70 active:brightness-75"
+          >
             Try It Free
-          </button>
-
+          </NuxtLink>
           <div class="h-px bg-gray-100 my-5"></div>
 
           <ul class="space-y-3 text-sm">

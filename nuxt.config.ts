@@ -1,10 +1,8 @@
-// https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   modules: [
     '@nuxt/eslint',
     '@nuxt/ui'
   ],
-
   devtools: {
     enabled: true
   },
@@ -23,6 +21,20 @@ export default defineNuxtConfig({
         commaDangle: 'never',
         braceStyle: '1tbs'
       }
+    }
+  },
+
+  app: {
+    head: {
+      link: [
+        {
+          rel: 'stylesheet',
+          href: 'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap'
+        }
+      ],
+      script: [
+        { src: 'https://code.iconify.design/iconify-icon/2.1.0/iconify-icon.min.js' }
+      ]
     }
   }
 })
