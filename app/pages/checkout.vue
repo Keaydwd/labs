@@ -5,11 +5,13 @@ useHead({
   title: 'Оформлення підписки'
 })
 
-const route = useRoute()
-const planName = route.query.plan || 'Team'
-const isAnnual = route.query.annual || 'true'
+const subscriptionStore = useSubscriptionStore()
+const { planName, isAnnual } = storeToRefs(subscriptionStore)
 
-const { data: plan } = await useFetch(`/api/checkout?plan=${planName}&annual=${isAnnual}`)
+const { data: plan } = await useFetch('/api/checkout', {
+  query: { plan: planName, annual: isAnnual },
+  watch: [planName, isAnnual]
+})
 
 const form = ref({
   cardNumber: '',
@@ -38,13 +40,11 @@ const submitSubscription = async () => {
 
 <template>
   <div class="min-h-screen pb-10">
-
     <div class="w-full bg-[#333333] py-4 text-center">
       <span class="text-white font-bold text-lg">Checkout</span>
     </div>
 
     <div class="max-w-[1000px] mx-auto px-6 mt-8">
-
       <NuxtLink to="/" class="text-gray-500 hover:text-gray-800 text-[15px] font-medium transition-colors">
         &lt;&lt; back
       </NuxtLink>
@@ -57,7 +57,6 @@ const submitSubscription = async () => {
       </p>
 
       <div class="flex flex-col md:flex-row gap-8 items-start">
-
         <div v-if="plan" class="w-full md:w-[348px] shrink-0 bg-white rounded-xl shadow-[0_4px_20px_-4px_rgba(0,0,0,0.1)] border border-gray-100 overflow-hidden">
           <div :class="['min-h-1.5 w-full bg-gradient-to-r', plan.gradient]"></div>
 
@@ -122,7 +121,6 @@ const submitSubscription = async () => {
         </div>
 
         <div class="flex-1 w-full bg-white border border-gray-200 rounded-xl p-8 shadow-sm">
-
           <h3 class="text-[17px] font-bold text-gray-900 mb-5">Order Summary</h3>
           <div class="flex justify-between items-center mb-3">
             <span class="text-[15px] text-gray-700">{{ plan?.billingText }} Plan</span>
@@ -185,7 +183,6 @@ const submitSubscription = async () => {
             </button>
           </form>
         </div>
-
       </div>
     </div>
   </div>

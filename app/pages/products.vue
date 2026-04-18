@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
+import { useRouter } from 'vue-router'
 
 useHead({
   title: 'Список продуктів'
@@ -9,10 +10,11 @@ const { data } = await useFetch('/api/products')
 
 const isAnnual = ref(true)
 const subscriptionStore = useSubscriptionStore()
+const router = useRouter()
 
 const selectPlan = (name: string) => {
   subscriptionStore.setSubscription(name, isAnnual.value)
-  navigateTo('/checkout')
+  router.push('/checkout')
 }
 
 const plans = [
